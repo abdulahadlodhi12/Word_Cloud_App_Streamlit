@@ -11,7 +11,7 @@ from io import BytesIO
 
 # First creating the function to decode the pdf
 def read_text(file):
-    return file.get_value().decode('utf-8')
+    return file.read().decode('utf-8')
 
 
 def read_docx(file):
@@ -25,9 +25,9 @@ def read_pdf(file):
 
 
 # Function to remove all the stopwords or (bag of words) which is disscuss in the nlp lecture
-def stop_words(text , aditional_words = []):
+def stop_words(text, additional_words=[]):
     words = text.split()
-    all_stopwords = STOPWORDS.union(set(aditional_words))
+    all_stopwords = STOPWORDS.union(set(additional_words))
     filtered_words = [word for word in words if word.lower() not in all_stopwords]
     return " ".join(filtered_words)
 
@@ -61,7 +61,7 @@ if file_uploaded:
         text = read_text(file_uploaded)
     elif file_uploaded.type == 'application/pdf':
         text = read_pdf(file_uploaded)
-    elif file_uploaded.type == 'application.vnd.openxmlformats-officedocument.wordprocessingml.document':
+    elif file_uploaded.type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
         text = read_docx(file_uploaded)
     else:
         st.write("File Not Supported. Make sure to give the same file format as given above")
